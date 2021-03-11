@@ -2,7 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'beer.g.dart';
 
-@JsonSerializable(createFactory: true, createToJson: false)
+//Creates modal for beer with json_serializable
+@JsonSerializable(createFactory: true, createToJson: false, nullable: true)
 class Beer {
   @JsonKey(name: "name")
   String name;

@@ -1,6 +1,8 @@
+import 'package:BeerApp/components/contstants.dart';
 import 'package:BeerApp/components/food_pair_list.dart';
 import 'package:flutter/material.dart';
 
+//Return screen with desirialized json data
 class DetailBeer extends StatelessWidget {
   final String name;
   final String imageUrl;
@@ -25,14 +27,13 @@ class DetailBeer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail of Beer"),
+        title: Text("Beer information"),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(15.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Image.network(
                   imageUrl,
@@ -52,27 +53,47 @@ class DetailBeer extends StatelessWidget {
                 SizedBox(
                   height: 20.0,
                 ),
-                Text(name),
+                Text(
+                  "The beer is called : " + name,
+                  style: kTitleStyle,
+                ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
                 ),
-                Text(tagline),
+                Text(
+                  tagline,
+                  style: kSubtitleStyle,
+                ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
                 ),
-                Text(firstBrewed),
+                Text(
+                  firstBrewed,
+                  style: kSubtitleStyle,
+                ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
                 ),
-                Text(description),
+                Text(
+                  "Description:",
+                  style: kTitleStyle,
+                ),
+                Text(
+                  description,
+                  style: kSubtitleStyle,
+                ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
                 ),
-                Text("Food Pairing"),
+                Text(
+                  "Combined with :",
+                  style: kTitleStyle,
+                  textAlign: TextAlign.left,
+                ),
                 FoodPair(
                   foodPairList: foodParing,
                 ),
@@ -80,7 +101,14 @@ class DetailBeer extends StatelessWidget {
                   color: Colors.yellow,
                   thickness: 2,
                 ),
-                Text(brewersTips),
+                Text(
+                  " Brewers Tips : ",
+                  style: kTitleStyle,
+                ),
+                Text(
+                  brewersTips,
+                  style: kSubtitleStyle,
+                ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
@@ -88,7 +116,14 @@ class DetailBeer extends StatelessWidget {
                 SizedBox(
                   height: 5.0,
                 ),
-                Text(contributedBy),
+                Text(
+                  "Countributed by : ",
+                  style: kTitleStyle,
+                ),
+                Text(
+                  contributedBy,
+                  style: kSubtitleStyle,
+                ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,

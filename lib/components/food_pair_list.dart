@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'contstants.dart';
+
+//Return list with json data key food_pairs
 class FoodPair extends StatelessWidget {
   final List<String> foodPairList;
   FoodPair({this.foodPairList});
@@ -10,8 +13,12 @@ class FoodPair extends StatelessWidget {
       itemCount: foodPairList.length,
       itemBuilder: (context, index) {
         return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(foodPairList[index]),
+            Text(
+              foodPairList[index],
+              style: kSubtitleStyle,
+            ),
           ],
         );
       },

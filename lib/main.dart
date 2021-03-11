@@ -1,8 +1,4 @@
-import 'package:BeerApp/bloc/beer_bloc.dart';
-import 'package:BeerApp/bloc/beer_events.dart';
-import 'package:BeerApp/services/beer_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'screens/home_screen.dart';
 
@@ -18,11 +14,7 @@ class BeerApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: Colors.amberAccent,
           scaffoldBackgroundColor: Color(0xFFf39c12)),
-      home: BlocProvider<BeerBloc>(
-          create: (context) => BeerBloc(
-                BeerRepository(),
-              )..add(FetchedBeers()),
-          child: HomeScreen()),
+      home: HomeScreen(),
     );
   }
 }
