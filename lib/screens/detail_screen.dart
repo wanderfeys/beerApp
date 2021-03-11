@@ -1,4 +1,4 @@
-import 'package:BeerApp/components/contstants.dart';
+import 'package:BeerApp/contstants.dart';
 import 'package:BeerApp/components/food_pair_list.dart';
 import 'package:flutter/material.dart';
 

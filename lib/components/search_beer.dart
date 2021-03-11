@@ -1,8 +1,8 @@
-import 'package:BeerApp/blocs/beerBloc/beer_bloc.dart';
-import 'package:BeerApp/blocs/beerBloc/beer_events.dart';
-import 'package:BeerApp/blocs/beerBloc/beer_states.dart';
+import 'package:BeerApp/bloc/beer_bloc.dart';
+import 'package:BeerApp/bloc/beer_events.dart';
+import 'package:BeerApp/bloc/beer_states.dart';
 import 'package:BeerApp/components/beer_list.dart';
-import 'package:BeerApp/components/contstants.dart';
+import 'package:BeerApp/contstants.dart';
 import 'package:BeerApp/services/beer_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

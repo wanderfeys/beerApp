@@ -1,4 +1,4 @@
-import 'package:BeerApp/components/contstants.dart';
+import 'package:BeerApp/contstants.dart';
 import 'package:BeerApp/model/beer.dart';
 import 'package:dio/dio.dart';
 

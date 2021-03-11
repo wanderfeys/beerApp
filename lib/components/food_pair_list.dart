@@ -1,6 +1,5 @@
+import 'package:BeerApp/contstants.dart';
 import 'package:flutter/material.dart';
-
-import 'contstants.dart';
 
 //Return list with json data key food_pairs
 class FoodPair extends StatelessWidget {

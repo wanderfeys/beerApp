@@ -1,8 +1,7 @@
+import 'package:BeerApp/contstants.dart';
 import 'package:BeerApp/model/beer.dart';
 import 'package:BeerApp/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'contstants.dart';
 
 //Return list with desirialized json data
 class BeerList extends StatelessWidget {
