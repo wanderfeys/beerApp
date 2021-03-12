@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 @immutable
 abstract class BeerEvent {}
 
-class FetchedBeerName extends BeerEvent {}
+class FetchedBeerByName extends BeerEvent {
+  final String beerName;
+  FetchedBeerByName(
+    this.beerName,
+  );
+}
 
-class FetchedBeers extends BeerEvent {}
+class FetchedAllBeers extends BeerEvent {}

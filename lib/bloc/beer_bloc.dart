@@ -10,35 +10,40 @@ import 'beer_states.dart';
 //Сreates a block for application logic
 class BeerBloc extends Bloc<BeerEvent, BeerState> {
   final BeerRepository beerRepository;
-  final String beerName;
-  BeerBloc({@required this.beerRepository, this.beerName})
-      : assert(beerRepository != null, beerName != null),
-        super(BeerInitial());
+  BeerBloc({@required this.beerRepository})
+      : assert(
+          beerRepository != null,
+        ),
+        super(BeerInitialState());
 
   @override
   Stream<BeerState> mapEventToState(BeerEvent event) async* {
-    if (event is FetchedBeers) {
-      yield BeerLoadInProgress();
+    //Return all beers if event FetchedAllBeers
+    if (event is FetchedAllBeers) {
+      yield BeerLoadingState();
       try {
-        final List<Beer> _beerFromApi =
-            await beerRepository.getBeers().timeout(const Duration(seconds: 5));
-        yield MainBeerSuccess(beerlist: _beerFromApi);
+        final List<Beer> _beerFromApi = await beerRepository
+            .getBeersFromRepository()
+            .timeout(const Duration(seconds: 5));
+        yield BeerLoadSuccessState(beerlist: _beerFromApi);
       } on TimeoutException catch (e) {
-        yield BeerLoadFailure(errorMessage: e.message);
+        yield BeerLoadFailureState(errorMessage: e.message);
       } on dynamic catch (e) {
-        yield BeerLoadFailure(errorMessage: e.toString());
+        yield BeerLoadFailureState(errorMessage: e.toString());
       }
-    } else if (event is FetchedBeerName) {
-      yield BeerLoadInProgress();
+    }
+    // Return beer by name if FetchedBeerByName
+    else if (event is FetchedBeerByName) {
+      yield BeerLoadingState();
       try {
         final List<Beer> _beerNameFromApi = await beerRepository
-            .getNameOfBeer(beerName)
+            .getBeersFromRepository(event.beerName)
             .timeout(const Duration(seconds: 5));
-        yield BeerLoadSuccess(beerlist: _beerNameFromApi);
+        yield BeerLoadSuccessState(beerlist: _beerNameFromApi);
       } on TimeoutException catch (e) {
-        yield BeerLoadFailure(errorMessage: e.message);
+        yield BeerLoadFailureState(errorMessage: e.message);
       } on dynamic catch (e) {
-        yield BeerLoadFailure(errorMessage: e.toString());
+        yield BeerLoadFailureState(errorMessage: e.toString());
       }
     }
   }

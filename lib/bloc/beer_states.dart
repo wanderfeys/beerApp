@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 @immutable
 abstract class BeerState {}
 
-class BeerLoadSuccess<T> extends BeerState {
-  final Iterable<T> beerlist;
-  BeerLoadSuccess({@required this.beerlist}) : assert(beerlist != null);
+class BeerLoadSuccessState extends BeerState {
+  final Iterable beerlist;
+  BeerLoadSuccessState({@required this.beerlist}) : assert(beerlist != null);
 }
 
-class MainBeerSuccess<T> extends BeerState {
-  final Iterable<T> beerlist;
-  MainBeerSuccess({@required this.beerlist}) : assert(beerlist != null);
-}
+class BeerInitialState extends BeerState {}
 
-class BeerInitial extends BeerState {}
+class BeerLoadingState extends BeerState {}
 
-class BeerLoadInProgress extends BeerState {}
-
-class BeerLoadFailure extends BeerState {
-  BeerLoadFailure({this.errorMessage});
+class BeerLoadFailureState extends BeerState {
+  BeerLoadFailureState({this.errorMessage});
   final String errorMessage;
 }

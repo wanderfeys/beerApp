@@ -2,19 +2,22 @@ import 'package:BeerApp/bloc/beer_bloc.dart';
 import 'package:BeerApp/bloc/beer_events.dart';
 import 'package:BeerApp/bloc/beer_states.dart';
 import 'package:BeerApp/components/beer_list.dart';
-import 'package:BeerApp/contstants.dart';
-import 'package:BeerApp/services/beer_repository.dart';
+import 'package:BeerApp/model/beer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:BeerApp/constants/styles.dart';
 
 //Creates search and  as result return api call with name parametr
-class BeerSearch extends SearchDelegate {
+class BeerSearch extends SearchDelegate<Beer> {
+  final BeerBloc beerBloc;
+  BeerSearch(this.beerBloc);
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
         icon: Icon(Icons.close),
         onPressed: () {
+          beerBloc.add(FetchedAllBeers());
           query = "";
           showSuggestions(context);
         },
@@ -27,78 +30,69 @@ class BeerSearch extends SearchDelegate {
     return IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
+          beerBloc.add(FetchedAllBeers());
           close(context, null);
         });
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return BlocProvider<BeerBloc>(
-      create: (context) => BeerBloc(
-        beerRepository: BeerRepository(),
-        beerName: query,
-      )..add(FetchedBeerName()),
-      child: Container(
-        child: BlocBuilder<BeerBloc, BeerState>(
-          builder: (ctx, state) {
-            if (state is BeerLoadInProgress) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state is BeerLoadSuccess && state.beerlist.isNotEmpty) {
-              return BeerList(
-                beerListFromApi: state.beerlist,
-              );
-            } else if (state is BeerLoadFailure) {
-              return Center(
-                child: Text(state.errorMessage),
-              );
-            }
-            return Container(
-              child: Center(
-                child: Text(
-                  "Support only english language for search. \n Try searching again but with: \n English langugage,\n A more accurate name for beer, \n Without symbols, \n Or by similar names.  ",
-                  style: kSubtitleStyle,
-                ),
-              ),
+    if (query.isNotEmpty) {
+      beerBloc.add(FetchedBeerByName(query));
+    } else
+      beerBloc.add(FetchedAllBeers());
+
+    return Container(
+      child: BlocBuilder<BeerBloc, BeerState>(
+        cubit: beerBloc,
+        builder: (ctx, state) {
+          if (state is BeerLoadingState) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          },
-        ),
+          } else if (state is BeerLoadSuccessState &&
+              state.beerlist.isNotEmpty) {
+            return BeerList(
+              beerListFromApi: state.beerlist,
+            );
+          } else if (state is BeerLoadFailureState) {
+            return Center(
+              child: Text(state.errorMessage),
+            );
+          }
+          return Container(
+            child: Center(
+              child: Text(
+                "Support only english language for search. \n Try searching again but with: \n English langugage,\n A more accurate name for beer, \n Without symbols, \n Or by similar names.  ",
+                style: Styles.kSubtitleStyle,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return BlocProvider<BeerBloc>(
-      create: (context) => BeerBloc(
-        beerRepository: BeerRepository(),
-      )..add(FetchedBeers()),
-      child: Container(
-        child: BlocBuilder<BeerBloc, BeerState>(
+    return Container(
+      child: BlocBuilder<BeerBloc, BeerState>(
+          cubit: beerBloc,
           builder: (ctx, state) {
-            if (state is BeerLoadInProgress) {
+            if (state is BeerLoadingState) {
               return Center(child: CircularProgressIndicator());
-            } else if (state is MainBeerSuccess && state.beerlist.isNotEmpty) {
+            } else if (state is BeerLoadSuccessState &&
+                state.beerlist.isNotEmpty) {
               return BeerList(
                 beerListFromApi: state.beerlist,
               );
-            } else if (state is BeerLoadFailure) {
+            } else if (state is BeerLoadFailureState) {
               return Center(
                 child: Text(state.errorMessage),
               );
-            }
-            return Container(
-              child: Center(
-                child: Text(
-                  "Support only english language for search \n Try searching again but with: \n English langugage.\n A more accurate name for beer, \n Without symbols, \n Or by similar names.  ",
-                  style: kSubtitleStyle,
-                ),
-              ),
-            );
-          },
-        ),
-      ),
+            } else
+              return Container();
+          }),
     );
   }
 }

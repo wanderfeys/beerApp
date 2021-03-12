@@ -1,7 +1,7 @@
-import 'package:BeerApp/contstants.dart';
 import 'package:BeerApp/model/beer.dart';
 import 'package:BeerApp/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:BeerApp/constants/strings.dart';
 
 //Return list with desirialized json data
 class BeerList extends StatelessWidget {
@@ -14,23 +14,13 @@ class BeerList extends StatelessWidget {
         shrinkWrap: true,
         itemCount: beerListFromApi.length,
         itemBuilder: (context, index) {
+          final item = beerListFromApi[index];
           if (beerListFromApi.isNotEmpty) {
             return GestureDetector(
               onTap: () {
                 Route route = MaterialPageRoute(
                   builder: (context) => DetailBeer(
-                    description:
-                        beerListFromApi[index].description ?? description,
-                    imageUrl: beerListFromApi[index].imageUrl ?? beerImage,
-                    tagline: beerListFromApi[index].tagline ?? tagline,
-                    name: beerListFromApi[index].name ?? name,
-                    foodParing: beerListFromApi[index].foodPairing,
-                    firstBrewed:
-                        beerListFromApi[index].firstBrewed ?? firstBrewed,
-                    brewersTips:
-                        beerListFromApi[index].brewersTips ?? brewersTips,
-                    contributedBy:
-                        beerListFromApi[index].contributedBy ?? contributedBy,
+                    beerModel: item,
                   ),
                 );
                 Navigator.push(context, route);
@@ -38,15 +28,15 @@ class BeerList extends StatelessWidget {
               child: ListTile(
                 isThreeLine: true,
                 title: Text(
-                  beerListFromApi[index].name ?? name,
+                  item.name ?? String.name,
                 ),
                 subtitle: Text(
-                  beerListFromApi[index].tagline ??
-                      tagline + "\n" + beerListFromApi[index].firstBrewed ??
-                      firstBrewed,
+                  item.tagline ??
+                      String.tagline + "\n" + item.firstBrewed ??
+                      String.firstBrewed,
                 ),
                 trailing: Image.network(
-                  beerListFromApi[index].imageUrl ?? beerImage,
+                  item.imageUrl ?? String.beerImage,
                   fit: BoxFit.scaleDown,
                   height: 100.0,
                   width: 100.0,

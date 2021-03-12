@@ -1,27 +1,14 @@
-import 'package:BeerApp/contstants.dart';
 import 'package:BeerApp/components/food_pair_list.dart';
+import 'package:BeerApp/model/beer.dart';
 import 'package:flutter/material.dart';
+import 'package:BeerApp/constants/styles.dart';
+import 'package:BeerApp/constants/strings.dart';
 
 //Return screen with desirialized json data
 class DetailBeer extends StatelessWidget {
-  final String name;
-  final String imageUrl;
-  final String description;
-  final String tagline;
-  final String firstBrewed;
-  final String brewersTips;
-  final String contributedBy;
-  final List<String> foodParing;
+  final Beer beerModel;
 
-  DetailBeer(
-      {this.name,
-      this.imageUrl,
-      this.description,
-      this.brewersTips,
-      this.contributedBy,
-      this.firstBrewed,
-      this.foodParing,
-      this.tagline});
+  DetailBeer({this.beerModel});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +23,7 @@ class DetailBeer extends StatelessWidget {
             child: Column(
               children: [
                 Image.network(
-                  imageUrl,
+                  beerModel.imageUrl ?? String.beerImage,
                   width: 300.0,
                   height: 300.0,
                 ),
@@ -54,24 +41,24 @@ class DetailBeer extends StatelessWidget {
                   height: 20.0,
                 ),
                 Text(
-                  "The beer is called : " + name,
-                  style: kTitleStyle,
+                  "The beer is called : " + beerModel.name ?? String.name,
+                  style: Styles.kTitleStyle,
                 ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
                 ),
                 Text(
-                  tagline,
-                  style: kSubtitleStyle,
+                  beerModel.tagline ?? String.tagline,
+                  style: Styles.kSubtitleStyle,
                 ),
                 Divider(
                   color: Colors.yellow,
                   thickness: 2,
                 ),
                 Text(
-                  firstBrewed,
-                  style: kSubtitleStyle,
+                  beerModel.firstBrewed ?? String.firstBrewed,
+                  style: Styles.kSubtitleStyle,
                 ),
                 Divider(
                   color: Colors.yellow,
@@ -79,11 +66,11 @@ class DetailBeer extends StatelessWidget {
                 ),
                 Text(
                   "Description:",
-                  style: kTitleStyle,
+                  style: Styles.kTitleStyle,
                 ),
                 Text(
-                  description,
-                  style: kSubtitleStyle,
+                  beerModel.description ?? String.description,
+                  style: Styles.kSubtitleStyle,
                 ),
                 Divider(
                   color: Colors.yellow,
@@ -91,11 +78,11 @@ class DetailBeer extends StatelessWidget {
                 ),
                 Text(
                   "Combined with :",
-                  style: kTitleStyle,
+                  style: Styles.kTitleStyle,
                   textAlign: TextAlign.left,
                 ),
                 FoodPair(
-                  foodPairList: foodParing,
+                  foodPairList: beerModel.foodPairing,
                 ),
                 Divider(
                   color: Colors.yellow,
@@ -103,11 +90,11 @@ class DetailBeer extends StatelessWidget {
                 ),
                 Text(
                   " Brewers Tips : ",
-                  style: kTitleStyle,
+                  style: Styles.kTitleStyle,
                 ),
                 Text(
-                  brewersTips,
-                  style: kSubtitleStyle,
+                  beerModel.brewersTips ?? String.brewersTips,
+                  style: Styles.kSubtitleStyle,
                 ),
                 Divider(
                   color: Colors.yellow,
@@ -118,11 +105,11 @@ class DetailBeer extends StatelessWidget {
                 ),
                 Text(
                   "Countributed by : ",
-                  style: kTitleStyle,
+                  style: Styles.kTitleStyle,
                 ),
                 Text(
-                  contributedBy,
-                  style: kSubtitleStyle,
+                  beerModel.contributedBy ?? String.contributedBy,
+                  style: Styles.kSubtitleStyle,
                 ),
                 Divider(
                   color: Colors.yellow,
